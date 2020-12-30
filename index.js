@@ -37,6 +37,6 @@ app.get('/reportdata/:date', function (req, res) {
     main().catch((error) => console.error(error))
 })
 
-app.listen(port, () => {
+app.listen(PORT, () => {
     console.log(`Example app listening at http://localhost:${PORT}`)
 })
