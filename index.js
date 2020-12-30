@@ -47,6 +47,28 @@ app.get('/', function (req, res) {
     })
 })
 
+app.post('/', function (req, res) {
+    request(options, function(error, response, body) {
+        let reportData = {
+            "uid": "",
+            "updateDate": "",
+            "titleText": "",
+            "mainText": "",
+            "redirectionUrl": ""
+        }
+        
+        reportData.uid = JSON.parse(body).data.report.id
+        reportData.updateDate = JSON.parse(body).data.report.updatedAt
+        reportData.titleText = JSON.parse(body).data.report.titletext
+        reportData.mainText = JSON.parse(body).data.report.maintext
+        reportData.redirectionUrl = JSON.parse(body).data.report.redirectionurl
+
+        if (!error && response.statusCode == 200) {
+            res.json(reportData)
+        }
+    })
+})
+
 app.get('/reportdata/:date', function (req, res) {
     main().catch((error) => console.error(error))
 })
