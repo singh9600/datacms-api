@@ -10,7 +10,7 @@ var headers = {
     'Accept': 'application/json'
 };
 
-var dataString = '{ "query": "{ report { reportDetail } }" }';
+var dataString = '{ "query": "{ report { id, updatedate, updatedAt, titletext, maintext, redirectionurl { maintext } } }" }';
 
 var options = {
     url: 'https://graphql.datocms.com/',
@@ -27,8 +27,22 @@ var options = {
 
 app.get('/', function (req, res) {
     request(options, function(error, response, body) {
+        let reportData = {
+            "uid": "",
+            "updateDate": "",
+            "titleText": "",
+            "mainText": "",
+            "redirectionUrl": ""
+        }
+        
+        reportData.uid = JSON.parse(body).data.report.id
+        reportData.updateDate = JSON.parse(body).data.report.updatedAt
+        reportData.titleText = JSON.parse(body).data.report.titletext
+        reportData.mainText = JSON.parse(body).data.report.maintext
+        reportData.redirectionUrl = JSON.parse(body).data.report.redirectionurl
+
         if (!error && response.statusCode == 200) {
-            res.json(JSON.parse(body))
+            res.json(reportData)
         }
     })
 })
