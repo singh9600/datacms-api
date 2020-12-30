@@ -28,7 +28,7 @@ var options = {
 app.get('/', function (req, res) {
     request(options, function(error, response, body) {
         if (!error && response.statusCode == 200) {
-            res.json(body)
+            res.json(JSON.parse(body))
         }
     })
 })
